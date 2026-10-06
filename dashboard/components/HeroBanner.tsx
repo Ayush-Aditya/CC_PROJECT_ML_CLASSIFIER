@@ -27,7 +27,7 @@ export default function HeroBanner({ data }: { data: any }) {
     >
       <header className="console-header">
         <div className="brand-lockup">
-          <span className="brand-mark">DR</span>
+          <img className="brand-logo" src="/data/logo.png" alt="Diabetes Risk Lab logo" />
           <div>
             <strong>Diabetes Risk Lab</strong>
             <span>classifier observability console</span>
