@@ -58,7 +58,7 @@
         "f1_score": 0.5455,
         "auc": 0.813,
         "specificity": 0.82,
-        "training_time_ms": 3.4
+        "training_time_ms": 3.7
       },
       "confusion_matrix": {
         "tn": 82,
@@ -489,7 +489,7 @@
         "f1_score": 0.66,
         "auc": 0.8179,
         "specificity": 0.87,
-        "training_time_ms": 126.0
+        "training_time_ms": 128.9
       },
       "confusion_matrix": {
         "tn": 87,
@@ -953,7 +953,7 @@
         "f1_score": 0.6,
         "auc": 0.7964,
         "specificity": 0.84,
-        "training_time_ms": 48.3
+        "training_time_ms": 35.3
       },
       "confusion_matrix": {
         "tn": 84,
@@ -1384,7 +1384,7 @@
         "f1_score": 0.6346,
         "auc": 0.7886,
         "specificity": 0.83,
-        "training_time_ms": 0.9
+        "training_time_ms": 1.1
       },
       "confusion_matrix": {
         "tn": 83,
@@ -1815,7 +1815,7 @@
         "f1_score": 0.6535,
         "auc": 0.8154,
         "specificity": 0.86,
-        "training_time_ms": 115.6
+        "training_time_ms": 133.6
       },
       "confusion_matrix": {
         "tn": 86,
