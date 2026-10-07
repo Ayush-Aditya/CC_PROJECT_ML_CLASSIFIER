@@ -21,49 +21,54 @@ The current benchmark evaluates:
 
 ## Dataset
 
-The project uses the UCI Early Stage Diabetes Risk Prediction Dataset. It contains 520 records collected from patients in Sylhet, Bangladesh, with demographic information and reported symptoms related to early-stage diabetes. This is a compact, symptom-based benchmark and should not be treated as representative of all populations or as a clinical diagnostic instrument.
+The project uses the CDC BRFSS 2015 Diabetes Health Indicators Dataset, a large population-health benchmark derived from the Behavioral Risk Factor Surveillance System. The source contains 253,680 records and 21 numeric health, lifestyle, demographic, and access-to-care indicators. To keep the original model comparison practical while avoiding a tiny benchmark, the pipeline selects exactly 10% of the cleaned source rows using `random_state=42`.
 
-The target is `Class`:
+The dashboard benchmark therefore contains 25,368 sampled records. Its target is `Diabetes_binary`:
 
 | Class | Meaning | Records | Share |
 |---|---|---:|---:|
-| 0 | Negative | 200 | 38.5% |
-| 1 | Positive | 320 | 61.5% |
+| 0 | No diabetes | 21,874 | 86.2% |
+| 1 | Diabetes | 3,494 | 13.8% |
 
-This dataset is moderately imbalanced toward the positive class. The pipeline preserves the observed class distribution and uses stratification for both the hold-out split and cross-validation. No synthetic oversampling or explicit class weights are applied. Accuracy is therefore interpreted alongside recall, specificity, F1 score, and ROC-AUC.
+This dataset is substantially imbalanced toward the negative class. The random sample preserves the source distribution approximately, and the pipeline uses stratification for the 80/20 hold-out split and five-fold cross-validation. No synthetic oversampling or explicit class weights are applied. Accuracy is therefore interpreted alongside recall, specificity, F1 score, and ROC-AUC.
 
 ### Input Features
 
 | Feature | Description |
 |---|---|
-| `Age` | Patient age in years |
-| `Gender` | Patient gender, encoded as a binary indicator |
-| `Polyuria` | Excessive urination symptom |
-| `Polydipsia` | Excessive thirst symptom |
-| `SuddenWeightLoss` | Sudden weight loss symptom |
-| `Weakness` | General weakness symptom |
-| `Polyphagia` | Excessive hunger symptom |
-| `GenitalThrush` | Genital thrush symptom |
-| `VisualBlurring` | Visual blurring symptom |
-| `Itching` | Itching symptom |
-| `Irritability` | Irritability symptom |
-| `DelayedHealing` | Delayed wound healing symptom |
-| `PartialParesis` | Partial muscle weakness symptom |
-| `MuscleStiffness` | Muscle stiffness symptom |
-| `Alopecia` | Hair loss symptom |
-| `Obesity` | Obesity symptom |
+| `HighBP` | High blood pressure indicator |
+| `HighChol` | High cholesterol indicator |
+| `CholCheck` | Cholesterol check within the last five years |
+| `BMI` | Body mass index |
+| `Smoker` | Smoking history indicator |
+| `Stroke` | History of stroke indicator |
+| `HeartDiseaseorAttack` | History of coronary heart disease or heart attack |
+| `PhysActivity` | Physical activity outside work in the past 30 days |
+| `Fruits` | Fruit consumption indicator |
+| `Veggies` | Vegetable consumption indicator |
+| `HvyAlcoholConsump` | Heavy alcohol consumption indicator |
+| `AnyHealthcare` | Health care coverage indicator |
+| `NoDocbcCost` | Unable to see a doctor because of cost |
+| `GenHlth` | Self-reported general health rating |
+| `MentHlth` | Number of days mental health was not good |
+| `PhysHlth` | Number of days physical health was not good |
+| `DiffWalk` | Difficulty walking or climbing stairs |
+| `Sex` | Respondent sex category |
+| `Age` | Age category |
+| `Education` | Education level category |
+| `Income` | Income category |
 
 ## Methodology
 
 ### 1. Data preparation
 
-The dataset contains categorical Yes/No symptom responses and a Male/Female gender field. The pipeline maps Yes/No and Male/Female values to numeric indicators, maps Positive/Negative labels to 1/0, verifies that no unexpected categories or missing values remain, and standardizes all 16 input features with `StandardScaler`.
+The source indicators are already numeric. The pipeline selects the required 21 predictors, removes rows with missing values, samples 10% with a fixed random seed, and standardizes the sampled features with `StandardScaler`. The sample operation occurs before the stratified train/test split, and the scaler is fitted only on the training partition.
 
 All feature columns are then standardized with `StandardScaler`. Scaling is important for Logistic Regression, SVM, and KNN because these models are sensitive to feature magnitude. It also provides a consistent input representation for comparison across models.
 
 ### 2. Train/test protocol
 
-The data is divided into an 80% training set and a 20% test set using a stratified split with `random_state=42`. The resulting benchmark uses 416 training records and 104 held-out test records. The test set is used only for the final reported metrics and ROC curves.
+The sampled data is divided into an 80% training set and a 20% test set using a stratified split with `random_state=42`. The resulting benchmark uses 20,294 training records and 5,074 held-out test records. The test set is used only for the final reported metrics and ROC curves.
 
 ### 3. Classifier rationale
 
@@ -116,7 +121,7 @@ The static results file at `dashboard/public/data/results.json` is generated by 
 .
 |-- ml_pipeline/
 |   |-- train_models.py           # Training, evaluation, and JSON export
-|   |-- diabetes_early_stage.csv  # Local UCI dataset copy
+|   |-- diabetes_brfss2015.csv    # Local CDC BRFSS dataset copy
 |   `-- requirements.txt          # Python dependencies
 |-- dashboard/
 |   |-- app/                      # Next.js App Router and global styles

@@ -1,102 +1,124 @@
 {
   "dataset_info": {
-    "name": "UCI Early Stage Diabetes Risk Prediction Dataset",
-    "description": "A 520-record UCI benchmark collected from patients in Sylhet, Bangladesh. It uses demographic information and reported symptoms to classify early-stage diabetes risk as Positive or Negative.",
-    "total_samples": 520,
+    "name": "CDC BRFSS 2015 Diabetes Health Indicators Dataset",
+    "description": "A large population-health benchmark derived from the 2015 Behavioral Risk Factor Surveillance System. It combines health history, lifestyle, access to care, demographic, and self-reported health indicators to classify diabetes.",
+    "total_samples": 25368,
+    "source_total_samples": 253680,
+    "sample_fraction": 0.1,
     "features": [
       {
+        "name": "HighBP",
+        "description": "High blood pressure indicator"
+      },
+      {
+        "name": "HighChol",
+        "description": "High cholesterol indicator"
+      },
+      {
+        "name": "CholCheck",
+        "description": "Cholesterol check within the last five years"
+      },
+      {
+        "name": "BMI",
+        "description": "Body mass index"
+      },
+      {
+        "name": "Smoker",
+        "description": "Smoking history indicator"
+      },
+      {
+        "name": "Stroke",
+        "description": "History of stroke indicator"
+      },
+      {
+        "name": "HeartDiseaseorAttack",
+        "description": "History of coronary heart disease or heart attack"
+      },
+      {
+        "name": "PhysActivity",
+        "description": "Physical activity outside work in the past 30 days"
+      },
+      {
+        "name": "Fruits",
+        "description": "Fruit consumption frequency indicator"
+      },
+      {
+        "name": "Veggies",
+        "description": "Vegetable consumption frequency indicator"
+      },
+      {
+        "name": "HvyAlcoholConsump",
+        "description": "Heavy alcohol consumption indicator"
+      },
+      {
+        "name": "AnyHealthcare",
+        "description": "Health care coverage indicator"
+      },
+      {
+        "name": "NoDocbcCost",
+        "description": "Could not see a doctor because of cost"
+      },
+      {
+        "name": "GenHlth",
+        "description": "Self-reported general health rating"
+      },
+      {
+        "name": "MentHlth",
+        "description": "Number of days mental health was not good"
+      },
+      {
+        "name": "PhysHlth",
+        "description": "Number of days physical health was not good"
+      },
+      {
+        "name": "DiffWalk",
+        "description": "Difficulty walking or climbing stairs"
+      },
+      {
+        "name": "Sex",
+        "description": "Respondent sex encoded numerically"
+      },
+      {
         "name": "Age",
-        "description": "Patient age in years"
+        "description": "Age category encoded numerically"
       },
       {
-        "name": "Gender",
-        "description": "Patient gender encoded as a binary feature"
+        "name": "Education",
+        "description": "Education level category"
       },
       {
-        "name": "Polyuria",
-        "description": "Excessive urination"
-      },
-      {
-        "name": "Polydipsia",
-        "description": "Excessive thirst"
-      },
-      {
-        "name": "SuddenWeightLoss",
-        "description": "Sudden weight loss"
-      },
-      {
-        "name": "Weakness",
-        "description": "General weakness"
-      },
-      {
-        "name": "Polyphagia",
-        "description": "Excessive hunger"
-      },
-      {
-        "name": "GenitalThrush",
-        "description": "Genital thrush symptom"
-      },
-      {
-        "name": "VisualBlurring",
-        "description": "Visual blurring symptom"
-      },
-      {
-        "name": "Itching",
-        "description": "Itching symptom"
-      },
-      {
-        "name": "Irritability",
-        "description": "Irritability symptom"
-      },
-      {
-        "name": "DelayedHealing",
-        "description": "Delayed wound healing"
-      },
-      {
-        "name": "PartialParesis",
-        "description": "Partial muscle weakness"
-      },
-      {
-        "name": "MuscleStiffness",
-        "description": "Muscle stiffness"
-      },
-      {
-        "name": "Alopecia",
-        "description": "Hair loss symptom"
-      },
-      {
-        "name": "Obesity",
-        "description": "Obesity symptom"
+        "name": "Income",
+        "description": "Income category"
       }
     ],
-    "target": "Class",
+    "target": "Diabetes_binary",
     "class_distribution": {
-      "positive": 320,
-      "negative": 200
+      "positive": 3494,
+      "negative": 21874
     },
-    "train_size": 416,
-    "test_size": 104
+    "train_size": 20294,
+    "test_size": 5074
   },
   "models": [
     {
       "name": "Logistic Regression",
       "short_name": "LR",
       "color": "#06b6d4",
-      "description": "A linear probability model that gives an interpretable baseline for symptom-based risk estimation.",
+      "description": "An interpretable linear baseline that estimates diabetes probability from population health indicators.",
       "metrics": {
-        "accuracy": 0.9423,
-        "precision": 0.9833,
-        "recall": 0.9219,
-        "f1_score": 0.9516,
-        "auc": 0.9902,
-        "specificity": 0.975,
-        "training_time_ms": 101.1
+        "accuracy": 0.8676,
+        "precision": 0.5611,
+        "recall": 0.1774,
+        "f1_score": 0.2696,
+        "auc": 0.8263,
+        "specificity": 0.9778,
+        "training_time_ms": 14.8
       },
       "confusion_matrix": {
-        "tn": 39,
-        "fp": 1,
-        "fn": 5,
-        "tp": 59
+        "tn": 4278,
+        "fp": 97,
+        "fn": 575,
+        "tp": 124
       },
       "roc_curve": [
         {
@@ -105,383 +127,383 @@
         },
         {
           "fpr": 0.0101,
-          "tpr": 0.875
+          "tpr": 0.103
         },
         {
           "fpr": 0.0202,
-          "tpr": 0.875
+          "tpr": 0.1674
         },
         {
           "fpr": 0.0303,
-          "tpr": 0.9375
+          "tpr": 0.2175
         },
         {
           "fpr": 0.0404,
-          "tpr": 0.9375
+          "tpr": 0.2775
         },
         {
           "fpr": 0.0505,
-          "tpr": 0.9375
+          "tpr": 0.319
         },
         {
           "fpr": 0.0606,
-          "tpr": 0.9375
+          "tpr": 0.3534
         },
         {
           "fpr": 0.0707,
-          "tpr": 0.9375
+          "tpr": 0.382
         },
         {
           "fpr": 0.0808,
-          "tpr": 0.9531
+          "tpr": 0.4235
         },
         {
           "fpr": 0.0909,
-          "tpr": 0.9531
+          "tpr": 0.4378
         },
         {
           "fpr": 0.101,
-          "tpr": 0.9531
+          "tpr": 0.4592
         },
         {
           "fpr": 0.1111,
-          "tpr": 0.9531
+          "tpr": 0.485
         },
         {
           "fpr": 0.1212,
-          "tpr": 0.9531
+          "tpr": 0.5165
         },
         {
           "fpr": 0.1313,
-          "tpr": 0.9531
+          "tpr": 0.5379
         },
         {
           "fpr": 0.1414,
-          "tpr": 0.9531
+          "tpr": 0.568
         },
         {
           "fpr": 0.1515,
-          "tpr": 1.0
+          "tpr": 0.5794
         },
         {
           "fpr": 0.1616,
-          "tpr": 1.0
+          "tpr": 0.6037
         },
         {
           "fpr": 0.1717,
-          "tpr": 1.0
+          "tpr": 0.6209
         },
         {
           "fpr": 0.1818,
-          "tpr": 1.0
+          "tpr": 0.6366
         },
         {
           "fpr": 0.1919,
-          "tpr": 1.0
+          "tpr": 0.6466
         },
         {
           "fpr": 0.202,
-          "tpr": 1.0
+          "tpr": 0.6581
         },
         {
           "fpr": 0.2121,
-          "tpr": 1.0
+          "tpr": 0.6838
         },
         {
           "fpr": 0.2222,
-          "tpr": 1.0
+          "tpr": 0.6996
         },
         {
           "fpr": 0.2323,
-          "tpr": 1.0
+          "tpr": 0.7167
         },
         {
           "fpr": 0.2424,
-          "tpr": 1.0
+          "tpr": 0.7253
         },
         {
           "fpr": 0.2525,
-          "tpr": 1.0
+          "tpr": 0.7425
         },
         {
           "fpr": 0.2626,
-          "tpr": 1.0
+          "tpr": 0.7525
         },
         {
           "fpr": 0.2727,
-          "tpr": 1.0
+          "tpr": 0.7711
         },
         {
           "fpr": 0.2828,
-          "tpr": 1.0
+          "tpr": 0.7797
         },
         {
           "fpr": 0.2929,
-          "tpr": 1.0
+          "tpr": 0.7854
         },
         {
           "fpr": 0.303,
-          "tpr": 1.0
+          "tpr": 0.7969
         },
         {
           "fpr": 0.3131,
-          "tpr": 1.0
+          "tpr": 0.8097
         },
         {
           "fpr": 0.3232,
-          "tpr": 1.0
+          "tpr": 0.8155
         },
         {
           "fpr": 0.3333,
-          "tpr": 1.0
+          "tpr": 0.8226
         },
         {
           "fpr": 0.3434,
-          "tpr": 1.0
+          "tpr": 0.8355
         },
         {
           "fpr": 0.3535,
-          "tpr": 1.0
+          "tpr": 0.8412
         },
         {
           "fpr": 0.3636,
-          "tpr": 1.0
+          "tpr": 0.8498
         },
         {
           "fpr": 0.3737,
-          "tpr": 1.0
+          "tpr": 0.8655
         },
         {
           "fpr": 0.3838,
-          "tpr": 1.0
+          "tpr": 0.8684
         },
         {
           "fpr": 0.3939,
-          "tpr": 1.0
+          "tpr": 0.8813
         },
         {
           "fpr": 0.404,
-          "tpr": 1.0
+          "tpr": 0.887
         },
         {
           "fpr": 0.4141,
-          "tpr": 1.0
+          "tpr": 0.8956
         },
         {
           "fpr": 0.4242,
-          "tpr": 1.0
+          "tpr": 0.8984
         },
         {
           "fpr": 0.4343,
-          "tpr": 1.0
+          "tpr": 0.9013
         },
         {
           "fpr": 0.4444,
-          "tpr": 1.0
+          "tpr": 0.9099
         },
         {
           "fpr": 0.4545,
-          "tpr": 1.0
+          "tpr": 0.9156
         },
         {
           "fpr": 0.4646,
-          "tpr": 1.0
+          "tpr": 0.9213
         },
         {
           "fpr": 0.4747,
-          "tpr": 1.0
+          "tpr": 0.9285
         },
         {
           "fpr": 0.4848,
-          "tpr": 1.0
+          "tpr": 0.9313
         },
         {
           "fpr": 0.4949,
-          "tpr": 1.0
+          "tpr": 0.9342
         },
         {
           "fpr": 0.5051,
-          "tpr": 1.0
+          "tpr": 0.9385
         },
         {
           "fpr": 0.5152,
-          "tpr": 1.0
+          "tpr": 0.9413
         },
         {
           "fpr": 0.5253,
-          "tpr": 1.0
+          "tpr": 0.9485
         },
         {
           "fpr": 0.5354,
-          "tpr": 1.0
+          "tpr": 0.9571
         },
         {
           "fpr": 0.5455,
-          "tpr": 1.0
+          "tpr": 0.9599
         },
         {
           "fpr": 0.5556,
-          "tpr": 1.0
+          "tpr": 0.9614
         },
         {
           "fpr": 0.5657,
-          "tpr": 1.0
+          "tpr": 0.9642
         },
         {
           "fpr": 0.5758,
-          "tpr": 1.0
+          "tpr": 0.9657
         },
         {
           "fpr": 0.5859,
-          "tpr": 1.0
+          "tpr": 0.9671
         },
         {
           "fpr": 0.596,
-          "tpr": 1.0
+          "tpr": 0.9671
         },
         {
           "fpr": 0.6061,
-          "tpr": 1.0
+          "tpr": 0.9685
         },
         {
           "fpr": 0.6162,
-          "tpr": 1.0
+          "tpr": 0.9714
         },
         {
           "fpr": 0.6263,
-          "tpr": 1.0
+          "tpr": 0.9728
         },
         {
           "fpr": 0.6364,
-          "tpr": 1.0
+          "tpr": 0.9757
         },
         {
           "fpr": 0.6465,
-          "tpr": 1.0
+          "tpr": 0.9757
         },
         {
           "fpr": 0.6566,
-          "tpr": 1.0
+          "tpr": 0.9785
         },
         {
           "fpr": 0.6667,
-          "tpr": 1.0
+          "tpr": 0.98
         },
         {
           "fpr": 0.6768,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.6869,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.697,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.7071,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.7172,
-          "tpr": 1.0
+          "tpr": 0.9857
         },
         {
           "fpr": 0.7273,
-          "tpr": 1.0
+          "tpr": 0.9857
         },
         {
           "fpr": 0.7374,
-          "tpr": 1.0
+          "tpr": 0.9886
         },
         {
           "fpr": 0.7475,
-          "tpr": 1.0
+          "tpr": 0.99
         },
         {
           "fpr": 0.7576,
-          "tpr": 1.0
+          "tpr": 0.99
         },
         {
           "fpr": 0.7677,
-          "tpr": 1.0
+          "tpr": 0.99
         },
         {
           "fpr": 0.7778,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.7879,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.798,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8081,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8182,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8283,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8384,
-          "tpr": 1.0
+          "tpr": 0.9928
         },
         {
           "fpr": 0.8485,
-          "tpr": 1.0
+          "tpr": 0.9928
         },
         {
           "fpr": 0.8586,
-          "tpr": 1.0
+          "tpr": 0.9933
         },
         {
           "fpr": 0.8687,
-          "tpr": 1.0
+          "tpr": 0.9943
         },
         {
           "fpr": 0.8788,
-          "tpr": 1.0
+          "tpr": 0.9943
         },
         {
           "fpr": 0.8889,
-          "tpr": 1.0
+          "tpr": 0.9943
         },
         {
           "fpr": 0.899,
-          "tpr": 1.0
+          "tpr": 0.9957
         },
         {
           "fpr": 0.9091,
-          "tpr": 1.0
+          "tpr": 0.9957
         },
         {
           "fpr": 0.9192,
-          "tpr": 1.0
+          "tpr": 0.9957
         },
         {
           "fpr": 0.9293,
-          "tpr": 1.0
+          "tpr": 0.9957
         },
         {
           "fpr": 0.9394,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9495,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9596,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9697,
@@ -501,11 +523,11 @@
         }
       ],
       "cv_scores": [
-        0.9643,
-        0.8916,
-        0.9277,
-        0.9398,
-        0.9398
+        0.8662,
+        0.8588,
+        0.862,
+        0.8665,
+        0.8672
       ],
       "feature_importance": null
     },
@@ -513,21 +535,21 @@
       "name": "Random Forest",
       "short_name": "RF",
       "color": "#8b5cf6",
-      "description": "A bagged tree ensemble that captures non-linear symptom interactions and ranks feature influence.",
+      "description": "A bagged tree ensemble that captures non-linear relationships across health and lifestyle variables.",
       "metrics": {
-        "accuracy": 0.9808,
-        "precision": 0.9844,
-        "recall": 0.9844,
-        "f1_score": 0.9844,
-        "auc": 0.9992,
-        "specificity": 0.975,
-        "training_time_ms": 120.9
+        "accuracy": 0.8616,
+        "precision": 0.4924,
+        "recall": 0.1388,
+        "f1_score": 0.2165,
+        "auc": 0.7973,
+        "specificity": 0.9771,
+        "training_time_ms": 298.4
       },
       "confusion_matrix": {
-        "tn": 39,
-        "fp": 1,
-        "fn": 1,
-        "tp": 63
+        "tn": 4275,
+        "fp": 100,
+        "fn": 602,
+        "tp": 97
       },
       "roc_curve": [
         {
@@ -536,395 +558,395 @@
         },
         {
           "fpr": 0.0101,
-          "tpr": 0.9688
+          "tpr": 0.0847
         },
         {
           "fpr": 0.0202,
-          "tpr": 0.9688
+          "tpr": 0.1227
         },
         {
           "fpr": 0.0303,
-          "tpr": 1.0
+          "tpr": 0.1825
         },
         {
           "fpr": 0.0404,
-          "tpr": 1.0
+          "tpr": 0.2296
         },
         {
           "fpr": 0.0505,
-          "tpr": 1.0
+          "tpr": 0.274
         },
         {
           "fpr": 0.0606,
-          "tpr": 1.0
+          "tpr": 0.2968
         },
         {
           "fpr": 0.0707,
-          "tpr": 1.0
+          "tpr": 0.3243
         },
         {
           "fpr": 0.0808,
-          "tpr": 1.0
+          "tpr": 0.3514
         },
         {
           "fpr": 0.0909,
-          "tpr": 1.0
+          "tpr": 0.3899
         },
         {
           "fpr": 0.101,
-          "tpr": 1.0
+          "tpr": 0.4192
         },
         {
           "fpr": 0.1111,
-          "tpr": 1.0
+          "tpr": 0.4434
         },
         {
           "fpr": 0.1212,
-          "tpr": 1.0
+          "tpr": 0.4614
         },
         {
           "fpr": 0.1313,
-          "tpr": 1.0
+          "tpr": 0.5005
         },
         {
           "fpr": 0.1414,
-          "tpr": 1.0
+          "tpr": 0.5186
         },
         {
           "fpr": 0.1515,
-          "tpr": 1.0
+          "tpr": 0.5364
         },
         {
           "fpr": 0.1616,
-          "tpr": 1.0
+          "tpr": 0.5572
         },
         {
           "fpr": 0.1717,
-          "tpr": 1.0
+          "tpr": 0.5774
         },
         {
           "fpr": 0.1818,
-          "tpr": 1.0
+          "tpr": 0.5931
         },
         {
           "fpr": 0.1919,
-          "tpr": 1.0
+          "tpr": 0.6135
         },
         {
           "fpr": 0.202,
-          "tpr": 1.0
+          "tpr": 0.6332
         },
         {
           "fpr": 0.2121,
-          "tpr": 1.0
+          "tpr": 0.6468
         },
         {
           "fpr": 0.2222,
-          "tpr": 1.0
+          "tpr": 0.6583
         },
         {
           "fpr": 0.2323,
-          "tpr": 1.0
+          "tpr": 0.6686
         },
         {
           "fpr": 0.2424,
-          "tpr": 1.0
+          "tpr": 0.678
         },
         {
           "fpr": 0.2525,
-          "tpr": 1.0
+          "tpr": 0.6912
         },
         {
           "fpr": 0.2626,
-          "tpr": 1.0
+          "tpr": 0.7019
         },
         {
           "fpr": 0.2727,
-          "tpr": 1.0
+          "tpr": 0.7148
         },
         {
           "fpr": 0.2828,
-          "tpr": 1.0
+          "tpr": 0.7311
         },
         {
           "fpr": 0.2929,
-          "tpr": 1.0
+          "tpr": 0.7476
         },
         {
           "fpr": 0.303,
-          "tpr": 1.0
+          "tpr": 0.761
         },
         {
           "fpr": 0.3131,
-          "tpr": 1.0
+          "tpr": 0.7737
         },
         {
           "fpr": 0.3232,
-          "tpr": 1.0
+          "tpr": 0.79
         },
         {
           "fpr": 0.3333,
-          "tpr": 1.0
+          "tpr": 0.8055
         },
         {
           "fpr": 0.3434,
-          "tpr": 1.0
+          "tpr": 0.8109
         },
         {
           "fpr": 0.3535,
-          "tpr": 1.0
+          "tpr": 0.8159
         },
         {
           "fpr": 0.3636,
-          "tpr": 1.0
+          "tpr": 0.8208
         },
         {
           "fpr": 0.3737,
-          "tpr": 1.0
+          "tpr": 0.8285
         },
         {
           "fpr": 0.3838,
-          "tpr": 1.0
+          "tpr": 0.8379
         },
         {
           "fpr": 0.3939,
-          "tpr": 1.0
+          "tpr": 0.8443
         },
         {
           "fpr": 0.404,
-          "tpr": 1.0
+          "tpr": 0.8498
         },
         {
           "fpr": 0.4141,
-          "tpr": 1.0
+          "tpr": 0.8544
         },
         {
           "fpr": 0.4242,
-          "tpr": 1.0
+          "tpr": 0.8585
         },
         {
           "fpr": 0.4343,
-          "tpr": 1.0
+          "tpr": 0.8626
         },
         {
           "fpr": 0.4444,
-          "tpr": 1.0
+          "tpr": 0.8665
         },
         {
           "fpr": 0.4545,
-          "tpr": 1.0
+          "tpr": 0.8709
         },
         {
           "fpr": 0.4646,
-          "tpr": 1.0
+          "tpr": 0.8778
         },
         {
           "fpr": 0.4747,
-          "tpr": 1.0
+          "tpr": 0.8822
         },
         {
           "fpr": 0.4848,
-          "tpr": 1.0
+          "tpr": 0.8866
         },
         {
           "fpr": 0.4949,
-          "tpr": 1.0
+          "tpr": 0.8916
         },
         {
           "fpr": 0.5051,
-          "tpr": 1.0
+          "tpr": 0.8986
         },
         {
           "fpr": 0.5152,
-          "tpr": 1.0
+          "tpr": 0.9056
         },
         {
           "fpr": 0.5253,
-          "tpr": 1.0
+          "tpr": 0.911
         },
         {
           "fpr": 0.5354,
-          "tpr": 1.0
+          "tpr": 0.9135
         },
         {
           "fpr": 0.5455,
-          "tpr": 1.0
+          "tpr": 0.916
         },
         {
           "fpr": 0.5556,
-          "tpr": 1.0
+          "tpr": 0.9185
         },
         {
           "fpr": 0.5657,
-          "tpr": 1.0
+          "tpr": 0.9237
         },
         {
           "fpr": 0.5758,
-          "tpr": 1.0
+          "tpr": 0.9298
         },
         {
           "fpr": 0.5859,
-          "tpr": 1.0
+          "tpr": 0.9358
         },
         {
           "fpr": 0.596,
-          "tpr": 1.0
+          "tpr": 0.9413
         },
         {
           "fpr": 0.6061,
-          "tpr": 1.0
+          "tpr": 0.9446
         },
         {
           "fpr": 0.6162,
-          "tpr": 1.0
+          "tpr": 0.9479
         },
         {
           "fpr": 0.6263,
-          "tpr": 1.0
+          "tpr": 0.9512
         },
         {
           "fpr": 0.6364,
-          "tpr": 1.0
+          "tpr": 0.9543
         },
         {
           "fpr": 0.6465,
-          "tpr": 1.0
+          "tpr": 0.9562
         },
         {
           "fpr": 0.6566,
-          "tpr": 1.0
+          "tpr": 0.9581
         },
         {
           "fpr": 0.6667,
-          "tpr": 1.0
+          "tpr": 0.9601
         },
         {
           "fpr": 0.6768,
-          "tpr": 1.0
+          "tpr": 0.962
         },
         {
           "fpr": 0.6869,
-          "tpr": 1.0
+          "tpr": 0.964
         },
         {
           "fpr": 0.697,
-          "tpr": 1.0
+          "tpr": 0.9657
         },
         {
           "fpr": 0.7071,
-          "tpr": 1.0
+          "tpr": 0.9669
         },
         {
           "fpr": 0.7172,
-          "tpr": 1.0
+          "tpr": 0.9682
         },
         {
           "fpr": 0.7273,
-          "tpr": 1.0
+          "tpr": 0.9695
         },
         {
           "fpr": 0.7374,
-          "tpr": 1.0
+          "tpr": 0.9708
         },
         {
           "fpr": 0.7475,
-          "tpr": 1.0
+          "tpr": 0.9721
         },
         {
           "fpr": 0.7576,
-          "tpr": 1.0
+          "tpr": 0.9734
         },
         {
           "fpr": 0.7677,
-          "tpr": 1.0
+          "tpr": 0.9747
         },
         {
           "fpr": 0.7778,
-          "tpr": 1.0
+          "tpr": 0.976
         },
         {
           "fpr": 0.7879,
-          "tpr": 1.0
+          "tpr": 0.9785
         },
         {
           "fpr": 0.798,
-          "tpr": 1.0
+          "tpr": 0.9795
         },
         {
           "fpr": 0.8081,
-          "tpr": 1.0
+          "tpr": 0.9805
         },
         {
           "fpr": 0.8182,
-          "tpr": 1.0
+          "tpr": 0.9815
         },
         {
           "fpr": 0.8283,
-          "tpr": 1.0
+          "tpr": 0.9825
         },
         {
           "fpr": 0.8384,
-          "tpr": 1.0
+          "tpr": 0.9836
         },
         {
           "fpr": 0.8485,
-          "tpr": 1.0
+          "tpr": 0.9846
         },
         {
           "fpr": 0.8586,
-          "tpr": 1.0
+          "tpr": 0.9856
         },
         {
           "fpr": 0.8687,
-          "tpr": 1.0
+          "tpr": 0.9866
         },
         {
           "fpr": 0.8788,
-          "tpr": 1.0
+          "tpr": 0.9877
         },
         {
           "fpr": 0.8889,
-          "tpr": 1.0
+          "tpr": 0.9887
         },
         {
           "fpr": 0.899,
-          "tpr": 1.0
+          "tpr": 0.9897
         },
         {
           "fpr": 0.9091,
-          "tpr": 1.0
+          "tpr": 0.9908
         },
         {
           "fpr": 0.9192,
-          "tpr": 1.0
+          "tpr": 0.9918
         },
         {
           "fpr": 0.9293,
-          "tpr": 1.0
+          "tpr": 0.9928
         },
         {
           "fpr": 0.9394,
-          "tpr": 1.0
+          "tpr": 0.9938
         },
         {
           "fpr": 0.9495,
-          "tpr": 1.0
+          "tpr": 0.9949
         },
         {
           "fpr": 0.9596,
-          "tpr": 1.0
+          "tpr": 0.9959
         },
         {
           "fpr": 0.9697,
-          "tpr": 1.0
+          "tpr": 0.9969
         },
         {
           "fpr": 0.9798,
-          "tpr": 1.0
+          "tpr": 0.9979
         },
         {
           "fpr": 0.9899,
-          "tpr": 1.0
+          "tpr": 0.999
         },
         {
           "fpr": 1.0,
@@ -932,76 +954,96 @@
         }
       ],
       "cv_scores": [
-        0.9762,
-        0.988,
-        0.9518,
-        0.9518,
-        0.988
+        0.8647,
+        0.8596,
+        0.8581,
+        0.8596,
+        0.8672
       ],
       "feature_importance": [
         {
-          "feature": "Polyuria",
-          "importance": 0.2049
-        },
-        {
-          "feature": "Polydipsia",
-          "importance": 0.1801
-        },
-        {
-          "feature": "Gender",
-          "importance": 0.1171
+          "feature": "BMI",
+          "importance": 0.174
         },
         {
           "feature": "Age",
-          "importance": 0.1113
+          "importance": 0.1173
         },
         {
-          "feature": "SuddenWeightLoss",
-          "importance": 0.0569
+          "feature": "Income",
+          "importance": 0.0944
         },
         {
-          "feature": "PartialParesis",
-          "importance": 0.046
+          "feature": "GenHlth",
+          "importance": 0.0818
         },
         {
-          "feature": "Alopecia",
-          "importance": 0.0438
+          "feature": "PhysHlth",
+          "importance": 0.0766
         },
         {
-          "feature": "Irritability",
-          "importance": 0.0364
+          "feature": "Education",
+          "importance": 0.0685
         },
         {
-          "feature": "VisualBlurring",
-          "importance": 0.03
+          "feature": "MentHlth",
+          "importance": 0.0597
         },
         {
-          "feature": "DelayedHealing",
-          "importance": 0.0299
+          "feature": "HighBP",
+          "importance": 0.0452
         },
         {
-          "feature": "Polyphagia",
-          "importance": 0.0295
+          "feature": "HighChol",
+          "importance": 0.0362
         },
         {
-          "feature": "Itching",
-          "importance": 0.0282
+          "feature": "Fruits",
+          "importance": 0.0339
         },
         {
-          "feature": "GenitalThrush",
-          "importance": 0.0269
+          "feature": "Smoker",
+          "importance": 0.0339
         },
         {
-          "feature": "MuscleStiffness",
-          "importance": 0.0214
+          "feature": "Sex",
+          "importance": 0.0314
         },
         {
-          "feature": "Weakness",
-          "importance": 0.0202
+          "feature": "PhysActivity",
+          "importance": 0.0268
         },
         {
-          "feature": "Obesity",
-          "importance": 0.0174
+          "feature": "Veggies",
+          "importance": 0.0267
+        },
+        {
+          "feature": "DiffWalk",
+          "importance": 0.0238
+        },
+        {
+          "feature": "HeartDiseaseorAttack",
+          "importance": 0.0215
+        },
+        {
+          "feature": "NoDocbcCost",
+          "importance": 0.0146
+        },
+        {
+          "feature": "Stroke",
+          "importance": 0.0132
+        },
+        {
+          "feature": "AnyHealthcare",
+          "importance": 0.0087
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "importance": 0.0084
+        },
+        {
+          "feature": "CholCheck",
+          "importance": 0.0033
         }
       ]
     },
@@ -1009,21 +1051,21 @@
       "name": "Support Vector Machine",
       "short_name": "SVM",
       "color": "#f59e0b",
-      "description": "A scaled RBF margin classifier suited to finding non-linear boundaries in compact feature spaces.",
+      "description": "An RBF-kernel margin classifier suited to finding non-linear boundaries in a structured feature space.",
       "metrics": {
-        "accuracy": 0.9808,
-        "precision": 0.9844,
-        "recall": 0.9844,
-        "f1_score": 0.9844,
-        "auc": 0.9973,
-        "specificity": 0.975,
-        "training_time_ms": 53.3
+        "accuracy": 0.865,
+        "precision": 0.57,
+        "recall": 0.0815,
+        "f1_score": 0.1427,
+        "auc": 0.7085,
+        "specificity": 0.9902,
+        "training_time_ms": 39764.1
       },
       "confusion_matrix": {
-        "tn": 39,
-        "fp": 1,
-        "fn": 1,
-        "tp": 63
+        "tn": 4332,
+        "fp": 43,
+        "fn": 642,
+        "tp": 57
       },
       "roc_curve": [
         {
@@ -1032,395 +1074,395 @@
         },
         {
           "fpr": 0.0101,
-          "tpr": 0.8906
+          "tpr": 0.0873
         },
         {
           "fpr": 0.0202,
-          "tpr": 0.8906
+          "tpr": 0.1545
         },
         {
           "fpr": 0.0303,
-          "tpr": 1.0
+          "tpr": 0.196
         },
         {
           "fpr": 0.0404,
-          "tpr": 1.0
+          "tpr": 0.2732
         },
         {
           "fpr": 0.0505,
-          "tpr": 1.0
+          "tpr": 0.309
         },
         {
           "fpr": 0.0606,
-          "tpr": 1.0
+          "tpr": 0.3376
         },
         {
           "fpr": 0.0707,
-          "tpr": 1.0
+          "tpr": 0.3662
         },
         {
           "fpr": 0.0808,
-          "tpr": 1.0
+          "tpr": 0.3848
         },
         {
           "fpr": 0.0909,
-          "tpr": 1.0
+          "tpr": 0.4192
         },
         {
           "fpr": 0.101,
-          "tpr": 1.0
+          "tpr": 0.4378
         },
         {
           "fpr": 0.1111,
-          "tpr": 1.0
+          "tpr": 0.4492
         },
         {
           "fpr": 0.1212,
-          "tpr": 1.0
+          "tpr": 0.4664
         },
         {
           "fpr": 0.1313,
-          "tpr": 1.0
+          "tpr": 0.495
         },
         {
           "fpr": 0.1414,
-          "tpr": 1.0
+          "tpr": 0.5165
         },
         {
           "fpr": 0.1515,
-          "tpr": 1.0
+          "tpr": 0.5293
         },
         {
           "fpr": 0.1616,
-          "tpr": 1.0
+          "tpr": 0.5436
         },
         {
           "fpr": 0.1717,
-          "tpr": 1.0
+          "tpr": 0.5508
         },
         {
           "fpr": 0.1818,
-          "tpr": 1.0
+          "tpr": 0.5594
         },
         {
           "fpr": 0.1919,
-          "tpr": 1.0
+          "tpr": 0.5708
         },
         {
           "fpr": 0.202,
-          "tpr": 1.0
+          "tpr": 0.5794
         },
         {
           "fpr": 0.2121,
-          "tpr": 1.0
+          "tpr": 0.5894
         },
         {
           "fpr": 0.2222,
-          "tpr": 1.0
+          "tpr": 0.5923
         },
         {
           "fpr": 0.2323,
-          "tpr": 1.0
+          "tpr": 0.6009
         },
         {
           "fpr": 0.2424,
-          "tpr": 1.0
+          "tpr": 0.6037
         },
         {
           "fpr": 0.2525,
-          "tpr": 1.0
+          "tpr": 0.6052
         },
         {
           "fpr": 0.2626,
-          "tpr": 1.0
+          "tpr": 0.608
         },
         {
           "fpr": 0.2727,
-          "tpr": 1.0
+          "tpr": 0.6109
         },
         {
           "fpr": 0.2828,
-          "tpr": 1.0
+          "tpr": 0.618
         },
         {
           "fpr": 0.2929,
-          "tpr": 1.0
+          "tpr": 0.6195
         },
         {
           "fpr": 0.303,
-          "tpr": 1.0
+          "tpr": 0.6252
         },
         {
           "fpr": 0.3131,
-          "tpr": 1.0
+          "tpr": 0.628
         },
         {
           "fpr": 0.3232,
-          "tpr": 1.0
+          "tpr": 0.6395
         },
         {
           "fpr": 0.3333,
-          "tpr": 1.0
+          "tpr": 0.6495
         },
         {
           "fpr": 0.3434,
-          "tpr": 1.0
+          "tpr": 0.6595
         },
         {
           "fpr": 0.3535,
-          "tpr": 1.0
+          "tpr": 0.6667
         },
         {
           "fpr": 0.3636,
-          "tpr": 1.0
+          "tpr": 0.6753
         },
         {
           "fpr": 0.3737,
-          "tpr": 1.0
+          "tpr": 0.6795
         },
         {
           "fpr": 0.3838,
-          "tpr": 1.0
+          "tpr": 0.6838
         },
         {
           "fpr": 0.3939,
-          "tpr": 1.0
+          "tpr": 0.6867
         },
         {
           "fpr": 0.404,
-          "tpr": 1.0
+          "tpr": 0.691
         },
         {
           "fpr": 0.4141,
-          "tpr": 1.0
+          "tpr": 0.6981
         },
         {
           "fpr": 0.4242,
-          "tpr": 1.0
+          "tpr": 0.7024
         },
         {
           "fpr": 0.4343,
-          "tpr": 1.0
+          "tpr": 0.7139
         },
         {
           "fpr": 0.4444,
-          "tpr": 1.0
+          "tpr": 0.7225
         },
         {
           "fpr": 0.4545,
-          "tpr": 1.0
+          "tpr": 0.7239
         },
         {
           "fpr": 0.4646,
-          "tpr": 1.0
+          "tpr": 0.7282
         },
         {
           "fpr": 0.4747,
-          "tpr": 1.0
+          "tpr": 0.7296
         },
         {
           "fpr": 0.4848,
-          "tpr": 1.0
+          "tpr": 0.7353
         },
         {
           "fpr": 0.4949,
-          "tpr": 1.0
+          "tpr": 0.7353
         },
         {
           "fpr": 0.5051,
-          "tpr": 1.0
+          "tpr": 0.7396
         },
         {
           "fpr": 0.5152,
-          "tpr": 1.0
+          "tpr": 0.7439
         },
         {
           "fpr": 0.5253,
-          "tpr": 1.0
+          "tpr": 0.7568
         },
         {
           "fpr": 0.5354,
-          "tpr": 1.0
+          "tpr": 0.7597
         },
         {
           "fpr": 0.5455,
-          "tpr": 1.0
+          "tpr": 0.7668
         },
         {
           "fpr": 0.5556,
-          "tpr": 1.0
+          "tpr": 0.7711
         },
         {
           "fpr": 0.5657,
-          "tpr": 1.0
+          "tpr": 0.7797
         },
         {
           "fpr": 0.5758,
-          "tpr": 1.0
+          "tpr": 0.7811
         },
         {
           "fpr": 0.5859,
-          "tpr": 1.0
+          "tpr": 0.7883
         },
         {
           "fpr": 0.596,
-          "tpr": 1.0
+          "tpr": 0.7969
         },
         {
           "fpr": 0.6061,
-          "tpr": 1.0
+          "tpr": 0.7983
         },
         {
           "fpr": 0.6162,
-          "tpr": 1.0
+          "tpr": 0.8054
         },
         {
           "fpr": 0.6263,
-          "tpr": 1.0
+          "tpr": 0.8097
         },
         {
           "fpr": 0.6364,
-          "tpr": 1.0
+          "tpr": 0.8155
         },
         {
           "fpr": 0.6465,
-          "tpr": 1.0
+          "tpr": 0.8197
         },
         {
           "fpr": 0.6566,
-          "tpr": 1.0
+          "tpr": 0.8212
         },
         {
           "fpr": 0.6667,
-          "tpr": 1.0
+          "tpr": 0.8226
         },
         {
           "fpr": 0.6768,
-          "tpr": 1.0
+          "tpr": 0.8269
         },
         {
           "fpr": 0.6869,
-          "tpr": 1.0
+          "tpr": 0.8298
         },
         {
           "fpr": 0.697,
-          "tpr": 1.0
+          "tpr": 0.8312
         },
         {
           "fpr": 0.7071,
-          "tpr": 1.0
+          "tpr": 0.8369
         },
         {
           "fpr": 0.7172,
-          "tpr": 1.0
+          "tpr": 0.8412
         },
         {
           "fpr": 0.7273,
-          "tpr": 1.0
+          "tpr": 0.8441
         },
         {
           "fpr": 0.7374,
-          "tpr": 1.0
+          "tpr": 0.8455
         },
         {
           "fpr": 0.7475,
-          "tpr": 1.0
+          "tpr": 0.8526
         },
         {
           "fpr": 0.7576,
-          "tpr": 1.0
+          "tpr": 0.8569
         },
         {
           "fpr": 0.7677,
-          "tpr": 1.0
+          "tpr": 0.8627
         },
         {
           "fpr": 0.7778,
-          "tpr": 1.0
+          "tpr": 0.8727
         },
         {
           "fpr": 0.7879,
-          "tpr": 1.0
+          "tpr": 0.8784
         },
         {
           "fpr": 0.798,
-          "tpr": 1.0
+          "tpr": 0.8841
         },
         {
           "fpr": 0.8081,
-          "tpr": 1.0
+          "tpr": 0.8898
         },
         {
           "fpr": 0.8182,
-          "tpr": 1.0
+          "tpr": 0.8927
         },
         {
           "fpr": 0.8283,
-          "tpr": 1.0
+          "tpr": 0.9013
         },
         {
           "fpr": 0.8384,
-          "tpr": 1.0
+          "tpr": 0.9056
         },
         {
           "fpr": 0.8485,
-          "tpr": 1.0
+          "tpr": 0.907
         },
         {
           "fpr": 0.8586,
-          "tpr": 1.0
+          "tpr": 0.9127
         },
         {
           "fpr": 0.8687,
-          "tpr": 1.0
+          "tpr": 0.9199
         },
         {
           "fpr": 0.8788,
-          "tpr": 1.0
+          "tpr": 0.9242
         },
         {
           "fpr": 0.8889,
-          "tpr": 1.0
+          "tpr": 0.9299
         },
         {
           "fpr": 0.899,
-          "tpr": 1.0
+          "tpr": 0.9371
         },
         {
           "fpr": 0.9091,
-          "tpr": 1.0
+          "tpr": 0.9399
         },
         {
           "fpr": 0.9192,
-          "tpr": 1.0
+          "tpr": 0.9399
         },
         {
           "fpr": 0.9293,
-          "tpr": 1.0
+          "tpr": 0.9413
         },
         {
           "fpr": 0.9394,
-          "tpr": 1.0
+          "tpr": 0.9442
         },
         {
           "fpr": 0.9495,
-          "tpr": 1.0
+          "tpr": 0.9557
         },
         {
           "fpr": 0.9596,
-          "tpr": 1.0
+          "tpr": 0.9657
         },
         {
           "fpr": 0.9697,
-          "tpr": 1.0
+          "tpr": 0.97
         },
         {
           "fpr": 0.9798,
-          "tpr": 1.0
+          "tpr": 0.98
         },
         {
           "fpr": 0.9899,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 1.0,
@@ -1428,11 +1470,11 @@
         }
       ],
       "cv_scores": [
-        0.9762,
-        0.9639,
-        0.9518,
-        0.9639,
-        0.9759
+        0.862,
+        0.861,
+        0.8647,
+        0.866,
+        0.8657
       ],
       "feature_importance": null
     },
@@ -1440,21 +1482,21 @@
       "name": "K-Nearest Neighbors",
       "short_name": "KNN",
       "color": "#10b981",
-      "description": "An instance-based model that predicts from the majority pattern among nearby symptom profiles.",
+      "description": "An instance-based model that predicts from the most similar health profiles in the training data.",
       "metrics": {
-        "accuracy": 0.9327,
-        "precision": 0.9831,
-        "recall": 0.9062,
-        "f1_score": 0.9431,
-        "auc": 0.9816,
-        "specificity": 0.975,
-        "training_time_ms": 0.4
+        "accuracy": 0.8504,
+        "precision": 0.4138,
+        "recall": 0.206,
+        "f1_score": 0.2751,
+        "auc": 0.7185,
+        "specificity": 0.9534,
+        "training_time_ms": 2.7
       },
       "confusion_matrix": {
-        "tn": 39,
-        "fp": 1,
-        "fn": 6,
-        "tp": 58
+        "tn": 4171,
+        "fp": 204,
+        "fn": 555,
+        "tp": 144
       },
       "roc_curve": [
         {
@@ -1463,395 +1505,395 @@
         },
         {
           "fpr": 0.0101,
-          "tpr": 0.8876
+          "tpr": 0.0541
         },
         {
           "fpr": 0.0202,
-          "tpr": 0.9003
+          "tpr": 0.0961
         },
         {
           "fpr": 0.0303,
-          "tpr": 0.9688
+          "tpr": 0.1381
         },
         {
           "fpr": 0.0404,
-          "tpr": 0.9688
+          "tpr": 0.1801
         },
         {
           "fpr": 0.0505,
-          "tpr": 0.9688
+          "tpr": 0.2145
         },
         {
           "fpr": 0.0606,
-          "tpr": 0.9691
+          "tpr": 0.2366
         },
         {
           "fpr": 0.0707,
-          "tpr": 0.9694
+          "tpr": 0.2587
         },
         {
           "fpr": 0.0808,
-          "tpr": 0.9698
+          "tpr": 0.2807
         },
         {
           "fpr": 0.0909,
-          "tpr": 0.9701
+          "tpr": 0.3028
         },
         {
           "fpr": 0.101,
-          "tpr": 0.9704
+          "tpr": 0.3249
         },
         {
           "fpr": 0.1111,
-          "tpr": 0.9708
+          "tpr": 0.347
         },
         {
           "fpr": 0.1212,
-          "tpr": 0.9711
+          "tpr": 0.3691
         },
         {
           "fpr": 0.1313,
-          "tpr": 0.9714
+          "tpr": 0.3912
         },
         {
           "fpr": 0.1414,
-          "tpr": 0.9718
+          "tpr": 0.4133
         },
         {
           "fpr": 0.1515,
-          "tpr": 0.9721
+          "tpr": 0.4352
         },
         {
           "fpr": 0.1616,
-          "tpr": 0.9724
+          "tpr": 0.4496
         },
         {
           "fpr": 0.1717,
-          "tpr": 0.9728
+          "tpr": 0.4639
         },
         {
           "fpr": 0.1818,
-          "tpr": 0.9731
+          "tpr": 0.4783
         },
         {
           "fpr": 0.1919,
-          "tpr": 0.9734
+          "tpr": 0.4927
         },
         {
           "fpr": 0.202,
-          "tpr": 0.9738
+          "tpr": 0.507
         },
         {
           "fpr": 0.2121,
-          "tpr": 0.9741
+          "tpr": 0.5214
         },
         {
           "fpr": 0.2222,
-          "tpr": 0.9744
+          "tpr": 0.5358
         },
         {
           "fpr": 0.2323,
-          "tpr": 0.9747
+          "tpr": 0.5501
         },
         {
           "fpr": 0.2424,
-          "tpr": 0.9751
+          "tpr": 0.5645
         },
         {
           "fpr": 0.2525,
-          "tpr": 0.9754
+          "tpr": 0.5789
         },
         {
           "fpr": 0.2626,
-          "tpr": 0.9757
+          "tpr": 0.5932
         },
         {
           "fpr": 0.2727,
-          "tpr": 0.9761
+          "tpr": 0.6076
         },
         {
           "fpr": 0.2828,
-          "tpr": 0.9764
+          "tpr": 0.622
         },
         {
           "fpr": 0.2929,
-          "tpr": 0.9767
+          "tpr": 0.6364
         },
         {
           "fpr": 0.303,
-          "tpr": 0.9771
+          "tpr": 0.6507
         },
         {
           "fpr": 0.3131,
-          "tpr": 0.9774
+          "tpr": 0.6651
         },
         {
           "fpr": 0.3232,
-          "tpr": 0.9777
+          "tpr": 0.6795
         },
         {
           "fpr": 0.3333,
-          "tpr": 0.9781
+          "tpr": 0.6938
         },
         {
           "fpr": 0.3434,
-          "tpr": 0.9784
+          "tpr": 0.7082
         },
         {
           "fpr": 0.3535,
-          "tpr": 0.9787
+          "tpr": 0.7226
         },
         {
           "fpr": 0.3636,
-          "tpr": 0.9791
+          "tpr": 0.7369
         },
         {
           "fpr": 0.3737,
-          "tpr": 0.9794
+          "tpr": 0.7501
         },
         {
           "fpr": 0.3838,
-          "tpr": 0.9797
+          "tpr": 0.7541
         },
         {
           "fpr": 0.3939,
-          "tpr": 0.9801
+          "tpr": 0.7582
         },
         {
           "fpr": 0.404,
-          "tpr": 0.9804
+          "tpr": 0.7622
         },
         {
           "fpr": 0.4141,
-          "tpr": 0.9807
+          "tpr": 0.7662
         },
         {
           "fpr": 0.4242,
-          "tpr": 0.9811
+          "tpr": 0.7703
         },
         {
           "fpr": 0.4343,
-          "tpr": 0.9814
+          "tpr": 0.7743
         },
         {
           "fpr": 0.4444,
-          "tpr": 0.9817
+          "tpr": 0.7783
         },
         {
           "fpr": 0.4545,
-          "tpr": 0.9821
+          "tpr": 0.7824
         },
         {
           "fpr": 0.4646,
-          "tpr": 0.9824
+          "tpr": 0.7864
         },
         {
           "fpr": 0.4747,
-          "tpr": 0.9827
+          "tpr": 0.7904
         },
         {
           "fpr": 0.4848,
-          "tpr": 0.9831
+          "tpr": 0.7944
         },
         {
           "fpr": 0.4949,
-          "tpr": 0.9834
+          "tpr": 0.7985
         },
         {
           "fpr": 0.5051,
-          "tpr": 0.9837
+          "tpr": 0.8025
         },
         {
           "fpr": 0.5152,
-          "tpr": 0.9841
+          "tpr": 0.8065
         },
         {
           "fpr": 0.5253,
-          "tpr": 0.9844
+          "tpr": 0.8106
         },
         {
           "fpr": 0.5354,
-          "tpr": 0.9847
+          "tpr": 0.8146
         },
         {
           "fpr": 0.5455,
-          "tpr": 0.985
+          "tpr": 0.8186
         },
         {
           "fpr": 0.5556,
-          "tpr": 0.9854
+          "tpr": 0.8227
         },
         {
           "fpr": 0.5657,
-          "tpr": 0.9857
+          "tpr": 0.8267
         },
         {
           "fpr": 0.5758,
-          "tpr": 0.986
+          "tpr": 0.8307
         },
         {
           "fpr": 0.5859,
-          "tpr": 0.9864
+          "tpr": 0.8347
         },
         {
           "fpr": 0.596,
-          "tpr": 0.9867
+          "tpr": 0.8388
         },
         {
           "fpr": 0.6061,
-          "tpr": 0.987
+          "tpr": 0.8428
         },
         {
           "fpr": 0.6162,
-          "tpr": 0.9874
+          "tpr": 0.8468
         },
         {
           "fpr": 0.6263,
-          "tpr": 0.9877
+          "tpr": 0.8509
         },
         {
           "fpr": 0.6364,
-          "tpr": 0.988
+          "tpr": 0.8549
         },
         {
           "fpr": 0.6465,
-          "tpr": 0.9884
+          "tpr": 0.8589
         },
         {
           "fpr": 0.6566,
-          "tpr": 0.9887
+          "tpr": 0.863
         },
         {
           "fpr": 0.6667,
-          "tpr": 0.989
+          "tpr": 0.867
         },
         {
           "fpr": 0.6768,
-          "tpr": 0.9894
+          "tpr": 0.871
         },
         {
           "fpr": 0.6869,
-          "tpr": 0.9897
+          "tpr": 0.8751
         },
         {
           "fpr": 0.697,
-          "tpr": 0.99
+          "tpr": 0.8791
         },
         {
           "fpr": 0.7071,
-          "tpr": 0.9904
+          "tpr": 0.8831
         },
         {
           "fpr": 0.7172,
-          "tpr": 0.9907
+          "tpr": 0.8871
         },
         {
           "fpr": 0.7273,
-          "tpr": 0.991
+          "tpr": 0.8912
         },
         {
           "fpr": 0.7374,
-          "tpr": 0.9914
+          "tpr": 0.8952
         },
         {
           "fpr": 0.7475,
-          "tpr": 0.9917
+          "tpr": 0.8992
         },
         {
           "fpr": 0.7576,
-          "tpr": 0.992
+          "tpr": 0.9033
         },
         {
           "fpr": 0.7677,
-          "tpr": 0.9924
+          "tpr": 0.9073
         },
         {
           "fpr": 0.7778,
-          "tpr": 0.9927
+          "tpr": 0.9113
         },
         {
           "fpr": 0.7879,
-          "tpr": 0.993
+          "tpr": 0.9154
         },
         {
           "fpr": 0.798,
-          "tpr": 0.9934
+          "tpr": 0.9194
         },
         {
           "fpr": 0.8081,
-          "tpr": 0.9937
+          "tpr": 0.9234
         },
         {
           "fpr": 0.8182,
-          "tpr": 0.994
+          "tpr": 0.9275
         },
         {
           "fpr": 0.8283,
-          "tpr": 0.9944
+          "tpr": 0.9315
         },
         {
           "fpr": 0.8384,
-          "tpr": 0.9947
+          "tpr": 0.9355
         },
         {
           "fpr": 0.8485,
-          "tpr": 0.995
+          "tpr": 0.9395
         },
         {
           "fpr": 0.8586,
-          "tpr": 0.9953
+          "tpr": 0.9436
         },
         {
           "fpr": 0.8687,
-          "tpr": 0.9957
+          "tpr": 0.9476
         },
         {
           "fpr": 0.8788,
-          "tpr": 0.996
+          "tpr": 0.9516
         },
         {
           "fpr": 0.8889,
-          "tpr": 0.9963
+          "tpr": 0.9557
         },
         {
           "fpr": 0.899,
-          "tpr": 0.9967
+          "tpr": 0.9597
         },
         {
           "fpr": 0.9091,
-          "tpr": 0.997
+          "tpr": 0.9637
         },
         {
           "fpr": 0.9192,
-          "tpr": 0.9973
+          "tpr": 0.9678
         },
         {
           "fpr": 0.9293,
-          "tpr": 0.9977
+          "tpr": 0.9718
         },
         {
           "fpr": 0.9394,
-          "tpr": 0.998
+          "tpr": 0.9758
         },
         {
           "fpr": 0.9495,
-          "tpr": 0.9983
+          "tpr": 0.9798
         },
         {
           "fpr": 0.9596,
-          "tpr": 0.9987
+          "tpr": 0.9839
         },
         {
           "fpr": 0.9697,
-          "tpr": 0.999
+          "tpr": 0.9879
         },
         {
           "fpr": 0.9798,
-          "tpr": 0.9993
+          "tpr": 0.9919
         },
         {
           "fpr": 0.9899,
-          "tpr": 0.9997
+          "tpr": 0.996
         },
         {
           "fpr": 1.0,
@@ -1859,11 +1901,11 @@
         }
       ],
       "cv_scores": [
-        0.9167,
-        0.8795,
-        0.9277,
-        0.9518,
-        0.9398
+        0.8463,
+        0.8448,
+        0.8482,
+        0.8441,
+        0.8504
       ],
       "feature_importance": null
     },
@@ -1871,21 +1913,21 @@
       "name": "Gradient Boosting (XGBoost)",
       "short_name": "XGB",
       "color": "#ec4899",
-      "description": "A boosted-tree model that sequentially corrects errors and learns high-capacity tabular patterns.",
+      "description": "A boosted-tree model that sequentially corrects errors and learns complex tabular patterns.",
       "metrics": {
-        "accuracy": 0.9808,
-        "precision": 1.0,
-        "recall": 0.9688,
-        "f1_score": 0.9841,
-        "auc": 1.0,
-        "specificity": 1.0,
-        "training_time_ms": 129.0
+        "accuracy": 0.8672,
+        "precision": 0.5556,
+        "recall": 0.1788,
+        "f1_score": 0.2706,
+        "auc": 0.8275,
+        "specificity": 0.9771,
+        "training_time_ms": 199.2
       },
       "confusion_matrix": {
-        "tn": 40,
-        "fp": 0,
-        "fn": 2,
-        "tp": 62
+        "tn": 4275,
+        "fp": 100,
+        "fn": 574,
+        "tp": 125
       },
       "roc_curve": [
         {
@@ -1894,391 +1936,391 @@
         },
         {
           "fpr": 0.0101,
-          "tpr": 1.0
+          "tpr": 0.1016
         },
         {
           "fpr": 0.0202,
-          "tpr": 1.0
+          "tpr": 0.1602
         },
         {
           "fpr": 0.0303,
-          "tpr": 1.0
+          "tpr": 0.2175
         },
         {
           "fpr": 0.0404,
-          "tpr": 1.0
+          "tpr": 0.2661
         },
         {
           "fpr": 0.0505,
-          "tpr": 1.0
+          "tpr": 0.3104
         },
         {
           "fpr": 0.0606,
-          "tpr": 1.0
+          "tpr": 0.3433
         },
         {
           "fpr": 0.0707,
-          "tpr": 1.0
+          "tpr": 0.3863
         },
         {
           "fpr": 0.0808,
-          "tpr": 1.0
+          "tpr": 0.4292
         },
         {
           "fpr": 0.0909,
-          "tpr": 1.0
+          "tpr": 0.4549
         },
         {
           "fpr": 0.101,
-          "tpr": 1.0
+          "tpr": 0.4864
         },
         {
           "fpr": 0.1111,
-          "tpr": 1.0
+          "tpr": 0.5036
         },
         {
           "fpr": 0.1212,
-          "tpr": 1.0
+          "tpr": 0.5336
         },
         {
           "fpr": 0.1313,
-          "tpr": 1.0
+          "tpr": 0.5479
         },
         {
           "fpr": 0.1414,
-          "tpr": 1.0
+          "tpr": 0.5608
         },
         {
           "fpr": 0.1515,
-          "tpr": 1.0
+          "tpr": 0.5851
         },
         {
           "fpr": 0.1616,
-          "tpr": 1.0
+          "tpr": 0.6052
         },
         {
           "fpr": 0.1717,
-          "tpr": 1.0
+          "tpr": 0.6252
         },
         {
           "fpr": 0.1818,
-          "tpr": 1.0
+          "tpr": 0.6452
         },
         {
           "fpr": 0.1919,
-          "tpr": 1.0
+          "tpr": 0.6567
         },
         {
           "fpr": 0.202,
-          "tpr": 1.0
+          "tpr": 0.6681
         },
         {
           "fpr": 0.2121,
-          "tpr": 1.0
+          "tpr": 0.6795
         },
         {
           "fpr": 0.2222,
-          "tpr": 1.0
+          "tpr": 0.7067
         },
         {
           "fpr": 0.2323,
-          "tpr": 1.0
+          "tpr": 0.721
         },
         {
           "fpr": 0.2424,
-          "tpr": 1.0
+          "tpr": 0.7282
         },
         {
           "fpr": 0.2525,
-          "tpr": 1.0
+          "tpr": 0.7368
         },
         {
           "fpr": 0.2626,
-          "tpr": 1.0
+          "tpr": 0.7539
         },
         {
           "fpr": 0.2727,
-          "tpr": 1.0
+          "tpr": 0.7625
         },
         {
           "fpr": 0.2828,
-          "tpr": 1.0
+          "tpr": 0.7725
         },
         {
           "fpr": 0.2929,
-          "tpr": 1.0
+          "tpr": 0.7854
         },
         {
           "fpr": 0.303,
-          "tpr": 1.0
+          "tpr": 0.794
         },
         {
           "fpr": 0.3131,
-          "tpr": 1.0
+          "tpr": 0.8026
         },
         {
           "fpr": 0.3232,
-          "tpr": 1.0
+          "tpr": 0.814
         },
         {
           "fpr": 0.3333,
-          "tpr": 1.0
+          "tpr": 0.824
         },
         {
           "fpr": 0.3434,
-          "tpr": 1.0
+          "tpr": 0.8312
         },
         {
           "fpr": 0.3535,
-          "tpr": 1.0
+          "tpr": 0.8484
         },
         {
           "fpr": 0.3636,
-          "tpr": 1.0
+          "tpr": 0.8612
         },
         {
           "fpr": 0.3737,
-          "tpr": 1.0
+          "tpr": 0.867
         },
         {
           "fpr": 0.3838,
-          "tpr": 1.0
+          "tpr": 0.8741
         },
         {
           "fpr": 0.3939,
-          "tpr": 1.0
+          "tpr": 0.8813
         },
         {
           "fpr": 0.404,
-          "tpr": 1.0
+          "tpr": 0.887
         },
         {
           "fpr": 0.4141,
-          "tpr": 1.0
+          "tpr": 0.8984
         },
         {
           "fpr": 0.4242,
-          "tpr": 1.0
+          "tpr": 0.9041
         },
         {
           "fpr": 0.4343,
-          "tpr": 1.0
+          "tpr": 0.9113
         },
         {
           "fpr": 0.4444,
-          "tpr": 1.0
+          "tpr": 0.9185
         },
         {
           "fpr": 0.4545,
-          "tpr": 1.0
+          "tpr": 0.9213
         },
         {
           "fpr": 0.4646,
-          "tpr": 1.0
+          "tpr": 0.9299
         },
         {
           "fpr": 0.4747,
-          "tpr": 1.0
+          "tpr": 0.9356
         },
         {
           "fpr": 0.4848,
-          "tpr": 1.0
+          "tpr": 0.9371
         },
         {
           "fpr": 0.4949,
-          "tpr": 1.0
+          "tpr": 0.9385
         },
         {
           "fpr": 0.5051,
-          "tpr": 1.0
+          "tpr": 0.9399
         },
         {
           "fpr": 0.5152,
-          "tpr": 1.0
+          "tpr": 0.9442
         },
         {
           "fpr": 0.5253,
-          "tpr": 1.0
+          "tpr": 0.9485
         },
         {
           "fpr": 0.5354,
-          "tpr": 1.0
+          "tpr": 0.9514
         },
         {
           "fpr": 0.5455,
-          "tpr": 1.0
+          "tpr": 0.9542
         },
         {
           "fpr": 0.5556,
-          "tpr": 1.0
+          "tpr": 0.9585
         },
         {
           "fpr": 0.5657,
-          "tpr": 1.0
+          "tpr": 0.9642
         },
         {
           "fpr": 0.5758,
-          "tpr": 1.0
+          "tpr": 0.9642
         },
         {
           "fpr": 0.5859,
-          "tpr": 1.0
+          "tpr": 0.9642
         },
         {
           "fpr": 0.596,
-          "tpr": 1.0
+          "tpr": 0.9685
         },
         {
           "fpr": 0.6061,
-          "tpr": 1.0
+          "tpr": 0.9685
         },
         {
           "fpr": 0.6162,
-          "tpr": 1.0
+          "tpr": 0.9714
         },
         {
           "fpr": 0.6263,
-          "tpr": 1.0
+          "tpr": 0.9728
         },
         {
           "fpr": 0.6364,
-          "tpr": 1.0
+          "tpr": 0.9728
         },
         {
           "fpr": 0.6465,
-          "tpr": 1.0
+          "tpr": 0.9757
         },
         {
           "fpr": 0.6566,
-          "tpr": 1.0
+          "tpr": 0.9785
         },
         {
           "fpr": 0.6667,
-          "tpr": 1.0
+          "tpr": 0.98
         },
         {
           "fpr": 0.6768,
-          "tpr": 1.0
+          "tpr": 0.9814
         },
         {
           "fpr": 0.6869,
-          "tpr": 1.0
+          "tpr": 0.9814
         },
         {
           "fpr": 0.697,
-          "tpr": 1.0
+          "tpr": 0.9814
         },
         {
           "fpr": 0.7071,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.7172,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.7273,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.7374,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.7475,
-          "tpr": 1.0
+          "tpr": 0.9843
         },
         {
           "fpr": 0.7576,
-          "tpr": 1.0
+          "tpr": 0.9857
         },
         {
           "fpr": 0.7677,
-          "tpr": 1.0
+          "tpr": 0.9871
         },
         {
           "fpr": 0.7778,
-          "tpr": 1.0
+          "tpr": 0.9871
         },
         {
           "fpr": 0.7879,
-          "tpr": 1.0
+          "tpr": 0.9886
         },
         {
           "fpr": 0.798,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8081,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8182,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8283,
-          "tpr": 1.0
+          "tpr": 0.9914
         },
         {
           "fpr": 0.8384,
-          "tpr": 1.0
+          "tpr": 0.9943
         },
         {
           "fpr": 0.8485,
-          "tpr": 1.0
+          "tpr": 0.9943
         },
         {
           "fpr": 0.8586,
-          "tpr": 1.0
+          "tpr": 0.9943
         },
         {
           "fpr": 0.8687,
-          "tpr": 1.0
+          "tpr": 0.9943
         },
         {
           "fpr": 0.8788,
-          "tpr": 1.0
+          "tpr": 0.9957
         },
         {
           "fpr": 0.8889,
-          "tpr": 1.0
+          "tpr": 0.9957
         },
         {
           "fpr": 0.899,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9091,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9192,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9293,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9394,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9495,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9596,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9697,
-          "tpr": 1.0
+          "tpr": 0.9971
         },
         {
           "fpr": 0.9798,
-          "tpr": 1.0
+          "tpr": 0.9986
         },
         {
           "fpr": 0.9899,
@@ -2290,85 +2332,105 @@
         }
       ],
       "cv_scores": [
-        1.0,
-        0.988,
-        0.9518,
-        0.9398,
-        0.988
+        0.8687,
+        0.8628,
+        0.8655,
+        0.8665,
+        0.8674
       ],
       "feature_importance": [
         {
-          "feature": "Polyuria",
-          "importance": 0.3167
+          "feature": "HighBP",
+          "importance": 0.3076
         },
         {
-          "feature": "Polydipsia",
-          "importance": 0.2224
+          "feature": "GenHlth",
+          "importance": 0.2295
         },
         {
-          "feature": "Gender",
-          "importance": 0.0969
+          "feature": "HighChol",
+          "importance": 0.0987
         },
         {
-          "feature": "Alopecia",
-          "importance": 0.0528
-        },
-        {
-          "feature": "GenitalThrush",
-          "importance": 0.0387
-        },
-        {
-          "feature": "DelayedHealing",
-          "importance": 0.0386
-        },
-        {
-          "feature": "Irritability",
-          "importance": 0.0329
-        },
-        {
-          "feature": "Itching",
-          "importance": 0.032
-        },
-        {
-          "feature": "MuscleStiffness",
-          "importance": 0.0296
-        },
-        {
-          "feature": "Obesity",
-          "importance": 0.0285
-        },
-        {
-          "feature": "Polyphagia",
-          "importance": 0.0269
-        },
-        {
-          "feature": "SuddenWeightLoss",
-          "importance": 0.0241
-        },
-        {
-          "feature": "Weakness",
-          "importance": 0.0188
+          "feature": "BMI",
+          "importance": 0.0436
         },
         {
           "feature": "Age",
-          "importance": 0.0159
+          "importance": 0.0387
         },
         {
-          "feature": "VisualBlurring",
+          "feature": "HvyAlcoholConsump",
+          "importance": 0.0381
+        },
+        {
+          "feature": "HeartDiseaseorAttack",
+          "importance": 0.037
+        },
+        {
+          "feature": "CholCheck",
+          "importance": 0.0232
+        },
+        {
+          "feature": "Income",
+          "importance": 0.0226
+        },
+        {
+          "feature": "Sex",
+          "importance": 0.0212
+        },
+        {
+          "feature": "Stroke",
+          "importance": 0.0187
+        },
+        {
+          "feature": "PhysActivity",
+          "importance": 0.015
+        },
+        {
+          "feature": "Education",
+          "importance": 0.0139
+        },
+        {
+          "feature": "Smoker",
+          "importance": 0.013
+        },
+        {
+          "feature": "MentHlth",
           "importance": 0.0129
         },
         {
-          "feature": "PartialParesis",
+          "feature": "Veggies",
+          "importance": 0.0126
+        },
+        {
+          "feature": "Fruits",
           "importance": 0.0123
+        },
+        {
+          "feature": "PhysHlth",
+          "importance": 0.0117
+        },
+        {
+          "feature": "DiffWalk",
+          "importance": 0.011
+        },
+        {
+          "feature": "NoDocbcCost",
+          "importance": 0.0093
+        },
+        {
+          "feature": "AnyHealthcare",
+          "importance": 0.0091
         }
       ]
     }
   ],
   "preprocessing": {
     "scaling": "StandardScaler",
-    "missing_value_strategy": "No missing values; categorical symptoms encoded as binary values",
-    "categorical_encoding": "Yes/No and Male/Female mapped to numeric indicators",
+    "missing_value_strategy": "Rows with missing values removed; source indicators are numeric",
     "test_split_ratio": 0.2,
+    "sample_fraction": 0.1,
     "random_state": 42
   }
 }

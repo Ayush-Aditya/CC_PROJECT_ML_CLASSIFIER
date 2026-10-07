@@ -1,7 +1,7 @@
 """
 Diabetes Risk Assessment: ML Classifier Comparison
 ===================================================
-Trains five classifiers on the UCI Early Stage Diabetes Risk Prediction
+Trains five classifiers on the CDC BRFSS 2015 Diabetes Health Indicators
 Dataset and exports evaluation data for the Next.js dashboard.
 """
 
@@ -31,60 +31,84 @@ from sklearn.svm import SVC
 
 warnings.filterwarnings("ignore")
 
-DATASET_URL = "https://archive.ics.uci.edu/ml/machine-learning-databases/00529/diabetes_data_upload.csv"
-DATASET_PATH = os.path.join(os.path.dirname(__file__), "diabetes_early_stage.csv")
+DATASET_URL = "https://raw.githubusercontent.com/ai2ys/CDC-Diabetes-Health-Indicators/main/dataset/data.csv"
+DATASET_PATH = os.path.join(os.path.dirname(__file__), "diabetes_brfss2015.csv")
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "dashboard", "public", "data")
 OUTPUT_PATH = os.path.join(OUTPUT_DIR, "results.json")
 RANDOM_STATE = 42
+SAMPLE_FRACTION = 0.10
 TEST_RATIO = 0.2
 CV_FOLDS = 5
 ROC_POINTS = 100
 
 FEATURE_NAMES = [
-    "Age", "Gender", "Polyuria", "Polydipsia", "SuddenWeightLoss",
-    "Weakness", "Polyphagia", "GenitalThrush", "VisualBlurring", "Itching",
-    "Irritability", "DelayedHealing", "PartialParesis", "MuscleStiffness",
-    "Alopecia", "Obesity",
+    "HighBP", "HighChol", "CholCheck", "BMI", "Smoker", "Stroke",
+    "HeartDiseaseorAttack", "PhysActivity", "Fruits", "Veggies",
+    "HvyAlcoholConsump", "AnyHealthcare", "NoDocbcCost", "GenHlth",
+    "MentHlth", "PhysHlth", "DiffWalk", "Sex", "Age", "Education", "Income",
 ]
-TARGET_NAME = "Class"
-YES_NO_FEATURES = FEATURE_NAMES[2:]
+TARGET_NAME = "Diabetes_binary"
 
 MODEL_CONFIG = [
     {
         "name": "Logistic Regression",
         "short_name": "LR",
         "color": "#06b6d4",
-        "description": "A linear probability model that gives an interpretable baseline for symptom-based risk estimation.",
+        "description": "An interpretable linear baseline that estimates diabetes probability from population health indicators.",
     },
     {
         "name": "Random Forest",
         "short_name": "RF",
         "color": "#8b5cf6",
-        "description": "A bagged tree ensemble that captures non-linear symptom interactions and ranks feature influence.",
+        "description": "A bagged tree ensemble that captures non-linear relationships across health and lifestyle variables.",
     },
     {
         "name": "Support Vector Machine",
         "short_name": "SVM",
         "color": "#f59e0b",
-        "description": "A scaled RBF margin classifier suited to finding non-linear boundaries in compact feature spaces.",
+        "description": "An RBF-kernel margin classifier suited to finding non-linear boundaries in a structured feature space.",
     },
     {
         "name": "K-Nearest Neighbors",
         "short_name": "KNN",
         "color": "#10b981",
-        "description": "An instance-based model that predicts from the majority pattern among nearby symptom profiles.",
+        "description": "An instance-based model that predicts from the most similar health profiles in the training data.",
     },
     {
         "name": "Gradient Boosting (XGBoost)",
         "short_name": "XGB",
         "color": "#ec4899",
-        "description": "A boosted-tree model that sequentially corrects errors and learns high-capacity tabular patterns.",
+        "description": "A boosted-tree model that sequentially corrects errors and learns complex tabular patterns.",
     },
 ]
 
+FEATURE_DESCRIPTIONS = {
+    "HighBP": "High blood pressure indicator",
+    "HighChol": "High cholesterol indicator",
+    "CholCheck": "Cholesterol check within the last five years",
+    "BMI": "Body mass index",
+    "Smoker": "Smoking history indicator",
+    "Stroke": "History of stroke indicator",
+    "HeartDiseaseorAttack": "History of coronary heart disease or heart attack",
+    "PhysActivity": "Physical activity outside work in the past 30 days",
+    "Fruits": "Fruit consumption frequency indicator",
+    "Veggies": "Vegetable consumption frequency indicator",
+    "HvyAlcoholConsump": "Heavy alcohol consumption indicator",
+    "AnyHealthcare": "Health care coverage indicator",
+    "NoDocbcCost": "Could not see a doctor because of cost",
+    "GenHlth": "Self-reported general health rating",
+    "MentHlth": "Number of days mental health was not good",
+    "PhysHlth": "Number of days physical health was not good",
+    "DiffWalk": "Difficulty walking or climbing stairs",
+    "Sex": "Respondent sex encoded numerically",
+    "Age": "Age category encoded numerically",
+    "Education": "Education level category",
+    "Income": "Income category",
+}
+
 
 def download_dataset():
-    """Download the UCI file only when the local copy is absent."""
+    """Download the CDC file only when the local copy is absent."""
     if os.path.exists(DATASET_PATH):
         print(f"  Dataset already exists at {DATASET_PATH}")
         return
@@ -95,31 +119,21 @@ def download_dataset():
 
 
 def load_and_preprocess():
-    """Load the categorical UCI data and encode it as numeric features."""
+    """Randomly sample 10% of the CDC data and create a stratified split."""
     print("\n[1/4] Loading and preprocessing data...")
     download_dataset()
 
     df = pd.read_csv(DATASET_PATH)
-    df = df.rename(columns={
-        "sudden weight loss": "SuddenWeightLoss",
-        "weakness": "Weakness",
-        "Genital thrush": "GenitalThrush",
-        "visual blurring": "VisualBlurring",
-        "delayed healing": "DelayedHealing",
-        "partial paresis": "PartialParesis",
-        "muscle stiffness": "MuscleStiffness",
-        "class": TARGET_NAME,
-    })
     print(f"  Dataset shape: {df.shape}")
+    required_columns = ["ID", TARGET_NAME] + FEATURE_NAMES
+    missing_columns = sorted(set(required_columns) - set(df.columns))
+    if missing_columns:
+        raise ValueError(f"Dataset is missing columns: {missing_columns}")
 
-    for column in YES_NO_FEATURES:
-        df[column] = df[column].map({"Yes": 1, "No": 0})
-    df["Gender"] = df["Gender"].map({"Male": 1, "Female": 0})
-    df[TARGET_NAME] = df[TARGET_NAME].map({"Positive": 1, "Negative": 0})
-
-    if df[FEATURE_NAMES + [TARGET_NAME]].isna().any().any():
-        raise ValueError("The UCI dataset contains an unexpected category or missing value")
-
+    df = df[required_columns].dropna()
+    original_sample_count = len(df)
+    df = df.sample(frac=SAMPLE_FRACTION, random_state=RANDOM_STATE).reset_index(drop=True)
+    print(f"  Random sample: {len(df)} of {original_sample_count} rows ({SAMPLE_FRACTION:.0%})")
     X = df[FEATURE_NAMES].astype(float).values
     y = df[TARGET_NAME].astype(int).values
     X_train, X_test, y_train, y_test = train_test_split(
@@ -130,26 +144,20 @@ def load_and_preprocess():
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-    feature_descriptions = [
-        "Patient age in years", "Patient gender encoded as a binary feature",
-        "Excessive urination", "Excessive thirst", "Sudden weight loss",
-        "General weakness", "Excessive hunger", "Genital thrush symptom",
-        "Visual blurring symptom", "Itching symptom", "Irritability symptom",
-        "Delayed wound healing", "Partial muscle weakness", "Muscle stiffness",
-        "Hair loss symptom", "Obesity symptom",
-    ]
     positive = int(y.sum())
     dataset_info = {
-        "name": "UCI Early Stage Diabetes Risk Prediction Dataset",
+        "name": "CDC BRFSS 2015 Diabetes Health Indicators Dataset",
         "description": (
-            "A 520-record UCI benchmark collected from patients in Sylhet, Bangladesh. "
-            "It uses demographic information and reported symptoms to classify early-stage "
-            "diabetes risk as Positive or Negative."
+            "A large population-health benchmark derived from the 2015 Behavioral Risk "
+            "Factor Surveillance System. It combines health history, lifestyle, access "
+            "to care, demographic, and self-reported health indicators to classify diabetes."
         ),
         "total_samples": int(len(df)),
+        "source_total_samples": int(original_sample_count),
+        "sample_fraction": SAMPLE_FRACTION,
         "features": [
-            {"name": name, "description": description}
-            for name, description in zip(FEATURE_NAMES, feature_descriptions)
+            {"name": name, "description": FEATURE_DESCRIPTIONS[name]}
+            for name in FEATURE_NAMES
         ],
         "target": TARGET_NAME,
         "class_distribution": {
@@ -171,8 +179,12 @@ def build_classifiers():
 
         xgb = XGBClassifier(
             n_estimators=100,
+            max_depth=4,
+            learning_rate=0.08,
+            subsample=0.85,
+            colsample_bytree=0.85,
             random_state=RANDOM_STATE,
-            use_label_encoder=False,
+            n_jobs=-1,
             eval_metric="logloss",
             verbosity=0,
         )
@@ -183,10 +195,10 @@ def build_classifiers():
         xgb = GradientBoostingClassifier(n_estimators=100, random_state=RANDOM_STATE)
 
     return [
-        LogisticRegression(max_iter=1000, random_state=RANDOM_STATE),
-        RandomForestClassifier(n_estimators=100, random_state=RANDOM_STATE),
+        LogisticRegression(max_iter=1000, random_state=RANDOM_STATE, n_jobs=-1),
+        RandomForestClassifier(n_estimators=100, random_state=RANDOM_STATE, n_jobs=-1),
         SVC(kernel="rbf", probability=True, random_state=RANDOM_STATE),
-        KNeighborsClassifier(n_neighbors=5),
+        KNeighborsClassifier(n_neighbors=5, n_jobs=-1),
         xgb,
     ]
 
@@ -222,7 +234,7 @@ def evaluate_model(clf, X_train, X_test, y_train, y_test, config, feature_names,
     fpr_raw, tpr_raw, _ = roc_curve(y_test, y_prob)
 
     cv = StratifiedKFold(n_splits=CV_FOLDS, shuffle=True, random_state=RANDOM_STATE)
-    cv_scores = cross_val_score(clf, X_train, y_train, cv=cv, scoring="accuracy")
+    cv_scores = cross_val_score(clf, X_train, y_train, cv=cv, scoring="accuracy", n_jobs=-1)
     feature_importance = None
     if has_feature_importance:
         importances = clf.feature_importances_
@@ -256,7 +268,7 @@ def evaluate_model(clf, X_train, X_test, y_train, y_test, config, feature_names,
 
 def main():
     print("=" * 64)
-    print("  Diabetes Risk Assessment - UCI Early Stage Dataset")
+    print("  Diabetes Risk Assessment - CDC BRFSS 2015 Dataset")
     print("=" * 64)
     X_train, X_test, y_train, y_test, dataset_info = load_and_preprocess()
 
@@ -277,9 +289,9 @@ def main():
         "models": results,
         "preprocessing": {
             "scaling": "StandardScaler",
-            "missing_value_strategy": "No missing values; categorical symptoms encoded as binary values",
-            "categorical_encoding": "Yes/No and Male/Female mapped to numeric indicators",
+            "missing_value_strategy": "Rows with missing values removed; source indicators are numeric",
             "test_split_ratio": TEST_RATIO,
+            "sample_fraction": SAMPLE_FRACTION,
             "random_state": RANDOM_STATE,
         },
     }
