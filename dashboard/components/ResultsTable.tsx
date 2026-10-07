@@ -46,7 +46,7 @@ export default function ResultsTable({ data }: { data: any }) {
                 </td>
                 {metrics.map(metric => {
                   const val = model.metrics[metric];
-                  const isBest = val === bestVals[metric];
+                  const isBest = metric !== 'accuracy' && val === bestVals[metric];
                   const displayVal = metric === 'training_time_ms' ? val.toFixed(1) : val.toFixed(4);
                   
                   return (
