@@ -58,7 +58,7 @@ export default function HeroBanner({ data }: { data: any }) {
 
       <div className="overview-grid">
         <article className="info-panel dataset-panel">
-          <div className="panel-heading"><div><span className="panel-index">01</span><h2>Dataset profile</h2></div><span className="panel-tag">PIMA / NIDDK</span></div>
+          <div className="panel-heading"><div><span className="panel-index">01</span><h2>Dataset profile</h2></div><span className="panel-tag">UCI / EARLY STAGE</span></div>
           <p>{data.dataset_info.description}</p>
           <div className="balance-row"><div><span>Class balance</span><strong>{positiveShare < 0.4 ? 'Imbalanced' : 'Balanced'}</strong></div><div className="balance-bar"><span style={{ width: `${negativeShare * 100}%` }} /><i style={{ width: `${positiveShare * 100}%` }} /></div><div className="balance-legend"><span><b className="legend-negative" /> No diabetes {negative}</span><span><b className="legend-positive" /> Diabetes {positive}</span></div></div>
           <div className="dataset-meta"><div><span>Target</span><strong>{data.dataset_info.target}</strong></div><div><span>Split</span><strong>80 / 20 stratified</strong></div><div><span>Scaling</span><strong>StandardScaler</strong></div><div><span>Missing values</span><strong>Median imputation</strong></div></div>
