@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 export default function ModelComparison({ data }: { data: any }) {
   const chartData = [
+    { name: 'Balanced Accuracy', ...Object.fromEntries(data.models.map((m: any) => [m.short_name, m.metrics.balanced_accuracy])) },
     { name: 'Accuracy', ...Object.fromEntries(data.models.map((m: any) => [m.short_name, m.metrics.accuracy])) },
     { name: 'Precision', ...Object.fromEntries(data.models.map((m: any) => [m.short_name, m.metrics.precision])) },
     { name: 'Recall', ...Object.fromEntries(data.models.map((m: any) => [m.short_name, m.metrics.recall])) },
@@ -20,7 +21,7 @@ export default function ModelComparison({ data }: { data: any }) {
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <h2 className="section-title">Model Performance Comparison</h2>
-      <p className="section-subtitle">Key evaluation metrics across all tested classifiers</p>
+      <p className="section-subtitle">Class-aware and threshold-based metrics across all tested classifiers</p>
       
       <div className="chart-container chart-container-lg">
         <ResponsiveContainer width="100%" height="100%">

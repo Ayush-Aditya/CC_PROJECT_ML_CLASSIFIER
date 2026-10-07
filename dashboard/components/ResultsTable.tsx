@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 
 export default function ResultsTable({ data }: { data: any }) {
-  const metrics = ['accuracy', 'precision', 'recall', 'f1_score', 'auc', 'specificity', 'training_time_ms'];
+  const metrics = ['balanced_accuracy', 'accuracy', 'precision', 'recall', 'f1_score', 'auc', 'specificity', 'training_time_ms'];
   
   // Find best value for each metric
   const bestVals: Record<string, number> = {};
@@ -27,6 +27,7 @@ export default function ResultsTable({ data }: { data: any }) {
           <thead>
             <tr>
               <th>Model</th>
+              <th>Balanced Accuracy</th>
               <th>Accuracy</th>
               <th>Precision</th>
               <th>Recall</th>

@@ -30,7 +30,7 @@ The dashboard benchmark therefore contains 25,368 sampled records. Its target is
 | 0 | No diabetes | 21,874 | 86.2% |
 | 1 | Diabetes | 3,494 | 13.8% |
 
-This dataset is substantially imbalanced toward the negative class. The random sample preserves the source distribution approximately, and the pipeline uses stratification for the 80/20 hold-out split and five-fold cross-validation. No synthetic oversampling or explicit class weights are applied. Accuracy is therefore interpreted alongside recall, specificity, F1 score, and ROC-AUC.
+This dataset is substantially imbalanced toward the negative class. The random sample preserves the source distribution approximately, and the pipeline uses stratification for the 80/20 hold-out split and five-fold cross-validation. The models use cost-sensitive training: balanced class weights for Logistic Regression, Random Forest, and SVM; positive-class weighting for XGBoost; and distance weighting for KNN. No synthetic oversampling is applied. Accuracy is therefore interpreted alongside balanced accuracy, recall, specificity, F1 score, and ROC-AUC.
 
 ### Input Features
 
@@ -86,7 +86,8 @@ The pipeline uses fixed random seeds where supported so that the exported result
 
 Each model is fitted on the training data, then evaluated on the held-out test set using:
 
-- Accuracy: overall proportion of correct predictions.
+- Accuracy: overall proportion of correct predictions; this can be misleading for an imbalanced target.
+- Balanced accuracy: average of positive-class recall and negative-class specificity.
 - Precision: proportion of predicted positive cases that are positive.
 - Recall: proportion of actual positive cases detected by the model.
 - F1 score: harmonic mean of precision and recall.
@@ -95,7 +96,7 @@ Each model is fitted on the training data, then evaluated on the held-out test s
 - Confusion matrix: true negatives, false positives, false negatives, and true positives.
 - Training time: measured in milliseconds for the fitted estimator.
 
-The pipeline also performs five-fold stratified cross-validation on the training set. The dashboard reports each model's mean accuracy and standard deviation across folds to distinguish a strong single split from a stable model.
+The pipeline also performs five-fold stratified cross-validation on the training set. The dashboard reports each model's mean accuracy and standard deviation across folds to distinguish a strong single split from a stable model. For screening-oriented interpretation, recall, balanced accuracy, F1 score, and the confusion matrix receive more attention than raw accuracy.
 
 ## Dashboard
 

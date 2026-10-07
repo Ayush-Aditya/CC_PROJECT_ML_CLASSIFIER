@@ -17,6 +17,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score,
+    balanced_accuracy_score,
     confusion_matrix,
     f1_score,
     precision_score,
@@ -172,8 +173,11 @@ def load_and_preprocess():
     return X_train, X_test, y_train, y_test, dataset_info
 
 
-def build_classifiers():
+def build_classifiers(y_train):
     """Instantiate the five comparison classifiers."""
+    negative_count = int((y_train == 0).sum())
+    positive_count = int((y_train == 1).sum())
+    positive_weight = negative_count / positive_count
     try:
         from xgboost import XGBClassifier
 
@@ -185,6 +189,7 @@ def build_classifiers():
             colsample_bytree=0.85,
             random_state=RANDOM_STATE,
             n_jobs=-1,
+            scale_pos_weight=positive_weight,
             eval_metric="logloss",
             verbosity=0,
         )
@@ -195,10 +200,10 @@ def build_classifiers():
         xgb = GradientBoostingClassifier(n_estimators=100, random_state=RANDOM_STATE)
 
     return [
-        LogisticRegression(max_iter=1000, random_state=RANDOM_STATE, n_jobs=-1),
-        RandomForestClassifier(n_estimators=100, random_state=RANDOM_STATE, n_jobs=-1),
-        SVC(kernel="rbf", probability=True, random_state=RANDOM_STATE),
-        KNeighborsClassifier(n_neighbors=5, n_jobs=-1),
+        LogisticRegression(max_iter=1000, random_state=RANDOM_STATE, n_jobs=-1, class_weight="balanced"),
+        RandomForestClassifier(n_estimators=100, random_state=RANDOM_STATE, n_jobs=-1, class_weight="balanced"),
+        SVC(kernel="rbf", probability=True, random_state=RANDOM_STATE, class_weight="balanced"),
+        KNeighborsClassifier(n_neighbors=5, n_jobs=-1, weights="distance"),
         xgb,
     ]
 
@@ -226,6 +231,7 @@ def evaluate_model(clf, X_train, X_test, y_train, y_test, config, feature_names,
     y_prob = clf.predict_proba(X_test)[:, 1]
     tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()
     accuracy = accuracy_score(y_test, y_pred)
+    balanced_accuracy = balanced_accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, zero_division=0)
     recall = recall_score(y_test, y_pred, zero_division=0)
     f1 = f1_score(y_test, y_pred, zero_division=0)
@@ -244,6 +250,7 @@ def evaluate_model(clf, X_train, X_test, y_train, y_test, config, feature_names,
         ]
 
     print(f"    Accuracy: {accuracy:.4f} | Precision: {precision:.4f} | Recall: {recall:.4f}")
+    print(f"    Balanced Accuracy: {balanced_accuracy:.4f}")
     print(f"    F1: {f1:.4f} | AUC: {auc:.4f} | Specificity: {specificity:.4f}")
     print(f"    CV Mean: {cv_scores.mean():.4f} +/- {cv_scores.std():.4f}")
     print(f"    Training Time: {train_time_ms:.1f}ms")
@@ -252,6 +259,7 @@ def evaluate_model(clf, X_train, X_test, y_train, y_test, config, feature_names,
         **config,
         "metrics": {
             "accuracy": round(float(accuracy), 4),
+            "balanced_accuracy": round(float(balanced_accuracy), 4),
             "precision": round(float(precision), 4),
             "recall": round(float(recall), 4),
             "f1_score": round(float(f1), 4),
@@ -273,7 +281,7 @@ def main():
     X_train, X_test, y_train, y_test, dataset_info = load_and_preprocess()
 
     print("\n[2/4] Building classifiers...")
-    classifiers = build_classifiers()
+    classifiers = build_classifiers(y_train)
     has_feature_importance = [False, True, False, False, True]
 
     print("\n[3/4] Training and evaluating models...")
@@ -289,6 +297,7 @@ def main():
         "models": results,
         "preprocessing": {
             "scaling": "StandardScaler",
+            "class_balance_strategy": "Balanced class weights for LR, RF, and SVM; positive-class weighting for XGBoost; distance weighting for KNN",
             "missing_value_strategy": "Rows with missing values removed; source indicators are numeric",
             "test_split_ratio": TEST_RATIO,
             "sample_fraction": SAMPLE_FRACTION,
